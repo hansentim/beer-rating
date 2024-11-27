@@ -1,5 +1,8 @@
 'use client';
+
+import React, { useEffect, useState } from 'react';
 import { BeerCard } from './components/beer-card';
+import Link from 'next/link';
 
 const beers = [
   {
@@ -59,17 +62,27 @@ const beers = [
 ];
 
 export default function BeersPage() {
+  const [userName, setUserName] = useState('');
+
+  useEffect(() => {
+    const name = localStorage.getItem('userName');
+    if (!name) {
+      window.location.href = '/';
+    } else {
+      setUserName(name);
+    }
+  }, []);
+
   const handleRatingSubmit = (beerId: number, rating: number) => {
     const ratings = JSON.parse(localStorage.getItem('ratings') || '[]');
-    ratings.push({ beerId, rating });
+    ratings.push({ beerId, rating, userName });
     localStorage.setItem('ratings', JSON.stringify(ratings));
-    console.log(`Rating for beer ${beerId}: ${rating}`);
   };
 
   return (
     <main className='p-4'>
       <h1 className='text-xl font-bold text-center mb-4'>
-        Rate the Christmas Beers!
+        Hey {userName}, let’s rate some beers!
       </h1>
       <div className='grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3'>
         {beers.map((beer) => (
@@ -79,6 +92,14 @@ export default function BeersPage() {
             onSubmitRating={handleRatingSubmit}
           />
         ))}
+      </div>
+      <div className='mt-8 text-center'>
+        <Link
+          href='/results'
+          className='px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600'
+        >
+          See Results
+        </Link>
       </div>
     </main>
   );
