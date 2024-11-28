@@ -63,16 +63,16 @@ const beers = [
 ];
 
 export default function BeersPage() {
-  const [userName, setUserName] = useState('');
+  const [userName, setUserName] = useState<string | null>(null);
 
   useEffect(() => {
-    const name = localStorage.getItem('userName');
-    if (!name) {
-      window.location.href = '/';
-    } else {
-      setUserName(name);
-    }
+    const storedUserName = localStorage.getItem('userName');
+    setUserName(storedUserName); // Set username from localStorage
   }, []);
+
+  if (userName === null) {
+    return null;
+  }
 
   const handleRatingSubmit = async (beerId: number, rating: number) => {
     try {
