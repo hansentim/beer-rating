@@ -1,7 +1,8 @@
 'use client';
 
 import { supabase } from '../../../supabase';
-import React, { useEffect, useState } from 'react';
+//import React, { useEffect, useState } from 'react';
+import { useUser } from '@/context/userContext';
 import { BeerCard } from '@/components/beer-card';
 import Link from 'next/link';
 
@@ -63,18 +64,11 @@ const beers = [
 ];
 
 export default function BeersPage() {
-  const [userName, setUserName] = useState<string | null>(null);
-
-  useEffect(() => {
-    const storedUserName = localStorage.getItem('userName');
-    setUserName(storedUserName); // Set username from localStorage
-  }, []);
-
-  if (userName === null) {
-    return null;
-  }
+  const { userName } = useUser();
+  console.log('UserName on BeersPage:', userName);
 
   const handleRatingSubmit = async (beerId: number, rating: number) => {
+    console.log('Submitting rating for beer:', { beerId, rating });
     try {
       const { data, error } = await supabase.from('ratings').insert([
         {
