@@ -3,7 +3,8 @@
 import React from 'react';
 import { useUser } from '@/context/userContext';
 import { BeerCard } from '@/components/menu-beercard';
-import { Button } from '@/components/ui/button'; // ShadCN Button
+import { Button } from '@/components/ui/button';
+import { useRouter } from 'next/navigation';
 
 const beers = [
   {
@@ -64,10 +65,11 @@ const beers = [
 
 export default function MenuPage() {
   const { userName } = useUser();
+  const router = useRouter();
 
   const handleStartTasting = () => {
     console.log('Start tasting!');
-    // Redirect or take further actions
+    router.push('/rating');
   };
 
   return (
