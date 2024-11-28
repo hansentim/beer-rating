@@ -3,8 +3,8 @@
 import React, {
   createContext,
   useContext,
-  useState,
   useEffect,
+  useState,
   ReactNode,
 } from 'react';
 
@@ -17,30 +17,20 @@ const UserContext = createContext<UserContextType | undefined>(undefined);
 
 export function UserProvider({ children }: { children: ReactNode }) {
   const [userName, setUserName] = useState('');
-  const [isHydrated, setIsHydrated] = useState(false);
 
   useEffect(() => {
+    // Sync with localStorage on mount
     const storedName = localStorage.getItem('userName');
-    console.log('Server-rendered userName (before hydration):', userName); // Log before hydration
-    if (storedName) {
-      setUserName(storedName);
-    }
-    setIsHydrated(true);
-    console.log('Client-rendered userName (after hydration):', storedName); // Log after hydration
+    if (storedName) setUserName(storedName);
   }, []);
 
-  if (!isHydrated) {
-    return null;
-  }
-
-  const updateUserName = (name: string) => {
+  const handleSetUserName = (name: string) => {
     setUserName(name);
     localStorage.setItem('userName', name);
-    console.log('UserName updated in localStorage:', name);
   };
 
   return (
-    <UserContext.Provider value={{ userName, setUserName: updateUserName }}>
+    <UserContext.Provider value={{ userName, setUserName: handleSetUserName }}>
       {children}
     </UserContext.Provider>
   );

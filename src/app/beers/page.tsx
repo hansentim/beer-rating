@@ -1,7 +1,7 @@
 'use client';
 
 import { supabase } from '../../../supabase';
-//import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useUser } from '@/context/userContext';
 import { BeerCard } from '@/components/beer-card';
 import Link from 'next/link';
@@ -65,10 +65,13 @@ const beers = [
 
 export default function BeersPage() {
   const { userName } = useUser();
-  console.log('UserName on BeersPage:', userName);
 
   const handleRatingSubmit = async (beerId: number, rating: number) => {
-    console.log('Submitting rating for beer:', { beerId, rating });
+    if (!userName) {
+      console.error('Error: userName is not set.');
+      return;
+    }
+
     try {
       const { data, error } = await supabase.from('ratings').insert([
         {
@@ -79,12 +82,13 @@ export default function BeersPage() {
       ]);
 
       if (error) {
-        throw new Error(error.message);
+        console.error('Error submitting rating:', error);
+        return;
       }
 
-      console.log('Rating submitted:', data);
-    } catch (e) {
-      console.error('Error submitting rating:', e);
+      console.log('Rating submitted successfully:', data);
+    } catch (error) {
+      console.error('Unexpected error:', error);
     }
   };
 

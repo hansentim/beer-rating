@@ -15,29 +15,20 @@ const beers = [
 ];
 
 export default function ResultsPage() {
-  const [isHydrated, setIsHydrated] = useState(false);
   const [results, setResults] = useState<BeerResult[]>([]);
   const [userRatings, setUserRatings] = useState<UserRating[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    setIsHydrated(true);
-  }, []);
-
-  useEffect(() => {
-    if (!isHydrated) return;
     const getRatings = async () => {
       try {
         const data = await fetchRatings();
         console.log('Fetched ratings:', data);
 
         const groupedRatings: Record<number, number[]> = data.reduce(
-          (acc: Record<number, number[]>, rating: UserRating) => {
-            const { beer_id, rating: score } = rating;
-
+          (acc: Record<number, number[]>, { beer_id, rating }) => {
             if (!acc[beer_id]) acc[beer_id] = [];
-            acc[beer_id].push(score);
-
+            acc[beer_id].push(rating);
             return acc;
           },
           {}
@@ -51,22 +42,20 @@ export default function ResultsPage() {
             totalRatings: scores.length,
           })
         );
-        console.log('Processed results:', results);
-        setResults(results.sort((a, b) => b.averageRating - a.averageRating));
+
+        results.sort((a, b) => b.averageRating - a.averageRating);
+
+        setResults(results);
         setUserRatings(data);
-        setLoading(false);
       } catch (error) {
         console.error('Error fetching ratings:', error);
+      } finally {
         setLoading(false);
       }
     };
 
     getRatings();
-  }, [isHydrated]);
-
-  if (!isHydrated) {
-    return null;
-  }
+  }, []);
 
   return (
     <main className='p-4'>

@@ -3,8 +3,11 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useUser } from '@/context/userContext';
+import Image from 'next/image';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
 
-export default function StartPage() {
+export default function LoginPage() {
   const { setUserName } = useUser();
   const [name, setName] = useState('');
   const router = useRouter();
@@ -12,31 +15,46 @@ export default function StartPage() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (name.trim()) {
-      console.log('UserName entered:', name);
       setUserName(name);
       router.push('/beers');
     }
   };
 
   return (
-    <main className='p-4'>
-      <h1 className='text-xl font-bold text-center mb-6'>
-        Welcome to the Beer Rating App!
+    <main className='flex flex-col items-center justify-center min-h-screen p-4 bg-white'>
+      <div className='mb-8'>
+        <Image
+          src='/images/beer-login.svg'
+          alt='Christmas Tree'
+          width={400}
+          height={400}
+          className='mx-auto'
+        />
+      </div>
+
+      <h1 className='text-3xl font-bold text-center mb-2'>
+        <span className='text-customGreen'>Hello</span>, beer drinker!
       </h1>
-      <form onSubmit={handleSubmit} className='flex flex-col items-center'>
-        <input
+
+      <p className='text-center text-gray-500 mb-6'>
+        We need to know who you are before we get going
+      </p>
+
+      <form onSubmit={handleSubmit} className='w-full max-w-sm space-y-4'>
+        <Input
           type='text'
-          placeholder='Enter your name'
+          placeholder='Name'
           value={name}
           onChange={(e) => setName(e.target.value)}
-          className='mb-4 p-2 border border-gray-300 rounded'
+          className='w-full'
         />
-        <button
+
+        <Button
           type='submit'
-          className='px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600'
+          className='w-full bg-customGreen hover:bg-customHoverGreen text-white'
         >
-          Start Rating
-        </button>
+          Continue
+        </Button>
       </form>
     </main>
   );
