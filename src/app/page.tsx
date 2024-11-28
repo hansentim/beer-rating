@@ -53,14 +53,14 @@ export default function LoginPage() {
         <Image
           src='/images/beer-login.svg'
           alt='Christmas Tree'
-          width={200}
-          height={200}
+          width={300}
+          height={300}
           className='mx-auto'
         />
       </div>
 
-      <h1 className='text-2xl font-bold text-center mb-2'>
-        <span className='text-green-600'>Hello</span>, beer drinker!
+      <h1 className='text-3xl font-bold text-center mb-2'>
+        <span className='text-customGreen'>Hello</span>, beer drinker!
       </h1>
 
       <p className='text-center text-gray-500 mb-6'>
