@@ -13,7 +13,7 @@ export default {
       colors: {
         background: 'hsl(var(--background))',
         foreground: 'hsl(var(--foreground))',
-        customYellow: '#fadc6b',
+        customYellow: '#F4F0BB',
         customGreen: '#226f54',
         customHoverGreen: '#35a77f',
         card: {

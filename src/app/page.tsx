@@ -4,21 +4,48 @@ import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useUser } from '@/context/userContext';
 import Image from 'next/image';
-import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input'; // ShadCN Input
+import { Button } from '@/components/ui/button'; // ShadCN Button
 
 export default function LoginPage() {
   const { setUserName } = useUser();
   const [name, setName] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (name.trim()) {
       setUserName(name);
-      router.push('/beers');
+      setIsLoading(true);
+
+      await new Promise((resolve) => setTimeout(resolve, 4000));
+
+      router.push('/menu');
     }
   };
+
+  if (isLoading) {
+    return (
+      <main className='flex flex-col items-center justify-center min-h-screen p-4 bg-white'>
+        <div className='mb-8'>
+          <Image
+            src='/images/beer-login.svg'
+            alt='Christmas Tree'
+            width={200}
+            height={200}
+            className='mx-auto'
+          />
+        </div>
+
+        <p className='text-center text-lg text-customGreen'>
+          Did you know that Christmas beer, often brewed with spices like
+          cinnamon and nutmeg, has been a festive tradition in many cultures for
+          centuries?
+        </p>
+      </main>
+    );
+  }
 
   return (
     <main className='flex flex-col items-center justify-center min-h-screen p-4 bg-white'>
@@ -26,14 +53,14 @@ export default function LoginPage() {
         <Image
           src='/images/beer-login.svg'
           alt='Christmas Tree'
-          width={400}
-          height={400}
+          width={200}
+          height={200}
           className='mx-auto'
         />
       </div>
 
-      <h1 className='text-3xl font-bold text-center mb-2'>
-        <span className='text-customGreen'>Hello</span>, beer drinker!
+      <h1 className='text-2xl font-bold text-center mb-2'>
+        <span className='text-green-600'>Hello</span>, beer drinker!
       </h1>
 
       <p className='text-center text-gray-500 mb-6'>
