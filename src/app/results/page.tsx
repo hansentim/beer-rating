@@ -1,18 +1,8 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-
-interface BeerResult {
-  beerId: number;
-  averageRating: number;
-  totalRatings: number;
-}
-
-interface UserRating {
-  beerId: number;
-  rating: number;
-  userName: string;
-}
+import { fetchRatings } from '@/utils/ratings';
+import { UserRating, BeerResult } from '@/types';
 
 const beers = [
   { id: 1, name: 'Lusse Lelle' },
@@ -25,49 +15,37 @@ const beers = [
 
 export default function ResultsPage() {
   const [results, setResults] = useState<BeerResult[]>([]);
-  const [highestRatedBeerId, setHighestRatedBeerId] = useState<number | null>(
-    null
-  );
   const [userRatings, setUserRatings] = useState<UserRating[]>([]);
 
   useEffect(() => {
-    const savedRatings = JSON.parse(localStorage.getItem('ratings') || '[]');
+    const getRatings = async () => {
+      const data = await fetchRatings();
 
-    // Group ratings by beerId
-    const groupedRatings: Record<number, number[]> = {};
-    savedRatings.forEach(
-      ({ beerId, rating }: { beerId: number; rating: number }) => {
-        if (!groupedRatings[beerId]) {
-          groupedRatings[beerId] = [];
-        }
-        groupedRatings[beerId].push(rating);
-      }
-    );
+      const groupedRatings: Record<number, number[]> = data.reduce(
+        (acc: Record<number, number[]>, rating: UserRating) => {
+          const { beer_id, rating: score } = rating;
 
-    // Calculate average ratings
-    const beerResults = Object.entries(groupedRatings).map(
-      ([beerId, ratings]) => {
-        const totalRatings = (ratings as number[]).length;
-        const averageRating =
-          (ratings as number[]).reduce((sum, r) => sum + r, 0) / totalRatings;
+          if (!acc[beer_id]) acc[beer_id] = [];
+          acc[beer_id].push(score);
 
-        return {
+          return acc;
+        },
+        {}
+      );
+      const results = Object.entries(groupedRatings).map(
+        ([beerId, scores]) => ({
           beerId: Number(beerId),
-          averageRating,
-          totalRatings,
-        };
-      }
-    );
+          averageRating:
+            scores.reduce((sum, score) => sum + score, 0) / scores.length,
+          totalRatings: scores.length,
+        })
+      );
 
-    // Find the beer with the highest average rating
-    const highestRated = beerResults.reduce(
-      (max, beer) => (beer.averageRating > max.averageRating ? beer : max),
-      { beerId: -1, averageRating: 0, totalRatings: 0 }
-    );
+      setResults(results.sort((a, b) => b.averageRating - a.averageRating));
+      setUserRatings(data);
+    };
 
-    setResults(beerResults.sort((a, b) => b.averageRating - a.averageRating));
-    setHighestRatedBeerId(highestRated.beerId);
-    setUserRatings(savedRatings); // Save all user ratings
+    getRatings();
   }, []);
 
   return (
@@ -78,42 +56,42 @@ export default function ResultsPage() {
       {results.length === 0 ? (
         <p className='text-center'>No ratings submitted yet.</p>
       ) : (
-        <ul className='space-y-4'>
-          {results.map((result) => (
-            <li
-              key={result.beerId}
-              className={`p-4 rounded shadow ${
-                result.beerId === highestRatedBeerId
-                  ? 'bg-yellow-200 border-2 border-yellow-500'
-                  : 'bg-gray-100'
-              }`}
-            >
-              <p className='text-lg font-bold'>
-                {beers.find((beer) => beer.id === result.beerId)?.name}{' '}
-                {result.beerId === highestRatedBeerId && ' (Winner!)'}
-              </p>
-              <p>Average Rating: {result.averageRating.toFixed(2)}</p>
-              <p>Total Ratings: {result.totalRatings}</p>
-            </li>
-          ))}
-        </ul>
+        <>
+          <ul className='space-y-4'>
+            {results.map((result, index) => (
+              <li
+                key={result.beerId}
+                className={`p-4 rounded shadow ${
+                  index === 0
+                    ? 'bg-yellow-200 border-2 border-yellow-500'
+                    : 'bg-gray-100'
+                }`}
+              >
+                <p className='text-lg font-bold'>
+                  {beers.find((beer) => beer.id === result.beerId)?.name}{' '}
+                  {index === 0 && ' (Winner!)'}
+                </p>
+                <p>Average Rating: {result.averageRating.toFixed(2)}</p>
+                <p>Total Ratings: {result.totalRatings}</p>
+              </li>
+            ))}
+          </ul>
+          <h2 className='text-lg font-bold mt-8'>User Ratings</h2>
+          <ul className='mt-4 space-y-2'>
+            {userRatings.map((rating, index) => (
+              <li key={index} className='p-2 bg-gray-100 rounded shadow'>
+                <p>
+                  <strong>{rating.user_name}</strong> rated{' '}
+                  <strong>
+                    {beers.find((beer) => beer.id === rating.beer_id)?.name}
+                  </strong>{' '}
+                  {rating.rating} stars
+                </p>
+              </li>
+            ))}
+          </ul>
+        </>
       )}
-
-      {/* User Ratings */}
-      <h2 className='text-lg font-bold mt-8'>User Ratings</h2>
-      <ul className='mt-4 space-y-2'>
-        {userRatings.map((rating, index) => (
-          <li key={index} className='p-2 bg-gray-100 rounded shadow'>
-            <p>
-              <strong>{rating.userName}</strong> rated{' '}
-              <strong>
-                {beers.find((beer) => beer.id === rating.beerId)?.name}
-              </strong>{' '}
-              {rating.rating} stars
-            </p>
-          </li>
-        ))}
-      </ul>
     </main>
   );
 }

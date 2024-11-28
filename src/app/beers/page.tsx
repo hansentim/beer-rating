@@ -1,7 +1,8 @@
 'use client';
 
+import { supabase } from '../../../supabase';
 import React, { useEffect, useState } from 'react';
-import { BeerCard } from './components/beer-card';
+import { BeerCard } from '@/components/beer-card';
 import Link from 'next/link';
 
 const beers = [
@@ -73,10 +74,24 @@ export default function BeersPage() {
     }
   }, []);
 
-  const handleRatingSubmit = (beerId: number, rating: number) => {
-    const ratings = JSON.parse(localStorage.getItem('ratings') || '[]');
-    ratings.push({ beerId, rating, userName });
-    localStorage.setItem('ratings', JSON.stringify(ratings));
+  const handleRatingSubmit = async (beerId: number, rating: number) => {
+    try {
+      const { data, error } = await supabase.from('ratings').insert([
+        {
+          beer_id: beerId,
+          rating: rating,
+          user_name: userName,
+        },
+      ]);
+
+      if (error) {
+        throw new Error(error.message);
+      }
+
+      console.log('Rating submitted:', data);
+    } catch (e) {
+      console.error('Error submitting rating:', e);
+    }
   };
 
   return (
