@@ -2,111 +2,181 @@
 
 import React, { useEffect, useState } from 'react';
 import { fetchRatings } from '@/utils/ratings';
-import { UserRating, BeerResult } from '@/types';
-import { SkeletonResultCard } from '@/components/skeleton-result-card';
+import { Button } from '@/components/ui/button';
+import Image from 'next/image';
+import { useRouter } from 'next/navigation';
+import { useUser } from '@/context/userContext';
+import { Skeleton } from '@/components/ui/skeleton';
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+} from '@/components/ui/card';
 
 const beers = [
-  { id: 1, name: 'Lusse Lelle' },
-  { id: 2, name: 'Stigbergets Juleljus NEIPA' },
-  { id: 3, name: 'Poppels Bryggeri Glögg Sour 2024' },
-  { id: 4, name: 'Benchwarmers Brewing Julbordsöl' },
-  { id: 5, name: 'Coppersmith´s Julöl' },
-  { id: 6, name: 'Train Station Brewery Jul IPA Alkoholfri, Glutenfri' },
+  { id: 1, name: 'Lusse Lelle', imageUrl: '/images/lelle.webp' },
+  {
+    id: 2,
+    name: 'Stigbergets Juleljus NEIPA',
+    imageUrl: '/images/stigberg.webp',
+  },
+  {
+    id: 3,
+    name: 'Poppels Bryggeri Glögg Sour 2024',
+    imageUrl: '/images/poppel.webp',
+  },
+  {
+    id: 4,
+    name: 'Benchwarmers Brewing Julbordsöl',
+    imageUrl: '/images/honey.webp',
+  },
+  { id: 5, name: 'Coppersmith´s Julöl', imageUrl: '/images/copper.webp' },
+  {
+    id: 6,
+    name: 'Train Station Brewery Jul IPA Alkoholfri, Glutenfri',
+    imageUrl: '/images/train.webp',
+  },
 ];
 
 export default function ResultsPage() {
-  const [results, setResults] = useState<BeerResult[]>([]);
-  const [userRatings, setUserRatings] = useState<UserRating[]>([]);
+  const [results, setResults] = useState<
+    {
+      beerId: number;
+      totalScore: number;
+      userScore: number;
+    }[]
+  >([]);
   const [loading, setLoading] = useState(true);
+  const router = useRouter();
+  const { userName } = useUser();
 
   useEffect(() => {
-    const getRatings = async () => {
-      try {
-        const data = await fetchRatings();
-        console.log('Fetched ratings:', data);
+    const getResults = async () => {
+      const data = await fetchRatings();
 
-        const groupedRatings: Record<number, number[]> = data.reduce(
-          (acc: Record<number, number[]>, { beer_id, rating }) => {
-            if (!acc[beer_id]) acc[beer_id] = [];
-            acc[beer_id].push(rating);
-            return acc;
-          },
-          {}
-        );
+      const groupedRatings = data.reduce(
+        (
+          acc: Record<
+            number,
+            { taste: number[]; feel: number[]; userScore: number | null }
+          >,
+          { beer_id, taste, feel, user_name }
+        ) => {
+          if (!acc[beer_id])
+            acc[beer_id] = { taste: [], feel: [], userScore: null };
+          acc[beer_id].taste.push(taste);
+          acc[beer_id].feel.push(feel);
 
-        const results = Object.entries(groupedRatings).map(
-          ([beerId, scores]) => ({
-            beerId: Number(beerId),
-            averageRating:
-              scores.reduce((sum, score) => sum + score, 0) / scores.length,
-            totalRatings: scores.length,
-          })
-        );
+          if (user_name === userName) {
+            acc[beer_id].userScore = taste + feel;
+          }
+          return acc;
+        },
+        {}
+      );
 
-        results.sort((a, b) => b.averageRating - a.averageRating);
+      const processedResults = Object.entries(groupedRatings).map(
+        ([beerId, { taste, feel, userScore }]) => ({
+          beerId: Number(beerId),
+          totalScore:
+            taste.reduce((sum, value) => sum + value, 0) +
+            feel.reduce((sum, value) => sum + value, 0),
+          userScore: userScore || 0,
+        })
+      );
 
-        setResults(results);
-        setUserRatings(data);
-      } catch (error) {
-        console.error('Error fetching ratings:', error);
-      } finally {
-        setLoading(false);
-      }
+      setResults(processedResults.sort((a, b) => b.totalScore - a.totalScore));
+      setLoading(false);
     };
 
-    getRatings();
-  }, []);
+    getResults();
+  }, [userName]);
+
+  if (loading) {
+    return (
+      <main className='p-4'>
+        <h1 className='text-2xl font-bold text-center mb-6'>
+          Results, tasting menu
+        </h1>
+        <ul className='space-y-4'>
+          {Array.from({ length: 4 }).map((_, index) => (
+            <li key={index} className='p-4 bg-gray-100 rounded shadow'>
+              <div className='flex items-center space-x-4'>
+                <Skeleton className='w-16 h-16 rounded-full' />
+                <div className='flex-1 space-y-2'>
+                  <Skeleton className='h-4 w-1/2' />
+                  <Skeleton className='h-4 w-1/3' />
+                  <Skeleton className='h-4 w-1/4' />
+                </div>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </main>
+    );
+  }
 
   return (
     <main className='p-4'>
       <h1 className='text-2xl font-bold text-center mb-6'>
-        Beer Ratings Results
+        <span className='text-customGreen'>Results</span>, tasting menu
       </h1>
-      {loading ? (
-        <ul className='space-y-4'>
-          {Array.from({ length: 3 }).map((_, index) => (
-            <SkeletonResultCard key={index} />
-          ))}
-        </ul>
-      ) : results.length === 0 ? (
-        <p className='text-center'>No ratings submitted yet.</p>
-      ) : (
-        <>
-          <ul className='space-y-4'>
-            {results.map((result, index) => (
-              <li
-                key={result.beerId}
-                className={`p-4 rounded shadow ${
-                  index === 0
-                    ? 'bg-yellow-200 border-2 border-yellow-500'
-                    : 'bg-gray-100'
-                }`}
-              >
-                <p className='text-lg font-bold'>
-                  {beers.find((beer) => beer.id === result.beerId)?.name}{' '}
-                  {index === 0 && ' (Winner!)'}
-                </p>
-                <p>Average Rating: {result.averageRating.toFixed(2)}</p>
-                <p>Total Ratings: {result.totalRatings}</p>
-              </li>
-            ))}
-          </ul>
-          <h2 className='text-lg font-bold mt-8'>User Ratings</h2>
-          <ul className='mt-4 space-y-2'>
-            {userRatings.map((rating, index) => (
-              <li key={index} className='p-2 bg-gray-100 rounded shadow'>
-                <p>
-                  <strong>{rating.user_name}</strong> rated{' '}
-                  <strong>
-                    {beers.find((beer) => beer.id === rating.beer_id)?.name}
-                  </strong>{' '}
-                  {rating.rating} stars
-                </p>
-              </li>
-            ))}
-          </ul>
-        </>
-      )}
+      <div className='text-center mb-6'>
+        <Button
+          onClick={() => router.push('/menu')}
+          className='px-4 py-2 bg-customGreen hover:bg-customHoverGreen text-white rounded w-full'
+        >
+          Back to menu
+        </Button>
+      </div>
+      <ul className='space-y-4'>
+        {results.map((result, index) => (
+          <li key={result.beerId}>
+            <Card
+              className={`shadow ${
+                index === 0 ? 'bg-customGreen' : 'bg-yellow-100'
+              }`}
+            >
+              <CardContent className='flex items-center space-x-4'>
+                <div className='flex-shrink-0'>
+                  <div className='w-10 h-10 rounded-full bg-green-500 flex justify-center items-center text-white font-bold'>
+                    {index + 1}
+                  </div>
+                </div>
+                <div className='w-16 h-16 relative flex-shrink-0'>
+                  <Image
+                    src={
+                      beers.find((beer) => beer.id === result.beerId)
+                        ?.imageUrl || ''
+                    }
+                    alt={
+                      beers.find((beer) => beer.id === result.beerId)?.name ||
+                      ''
+                    }
+                    fill
+                    className='object-contain rounded-full'
+                  />
+                </div>
+                <div>
+                  <CardHeader>
+                    <CardTitle className='text-lg font-bold'>
+                      {beers.find((beer) => beer.id === result.beerId)?.name}
+                    </CardTitle>
+                    <CardDescription className='text-sm text-gray-600'>
+                      Total Score: {result.totalScore} points
+                    </CardDescription>
+                    <CardDescription className='text-sm text-gray-600'>
+                      You: {result.userScore}
+                    </CardDescription>
+                  </CardHeader>
+                </div>
+              </CardContent>
+            </Card>
+          </li>
+        ))}
+      </ul>
     </main>
   );
 }

@@ -68,7 +68,8 @@ export default function MenuPage() {
   const router = useRouter();
 
   const handleStartTasting = () => {
-    console.log('Start tasting!');
+    console.log('Navigating to /rating...');
+
     router.push('/rating');
   };
 

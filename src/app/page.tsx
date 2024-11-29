@@ -4,8 +4,8 @@ import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useUser } from '@/context/userContext';
 import Image from 'next/image';
-import { Input } from '@/components/ui/input'; // ShadCN Input
-import { Button } from '@/components/ui/button'; // ShadCN Button
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
 
 export default function LoginPage() {
   const { setUserName } = useUser();
@@ -19,7 +19,7 @@ export default function LoginPage() {
       setUserName(name);
       setIsLoading(true);
 
-      await new Promise((resolve) => setTimeout(resolve, 4000));
+      await new Promise((resolve) => setTimeout(resolve, 3500));
 
       router.push('/menu');
     }

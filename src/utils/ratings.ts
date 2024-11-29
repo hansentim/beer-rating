@@ -5,7 +5,7 @@ export const fetchRatings = async (): Promise<UserRating[]> => {
   try {
     const { data, error } = await supabase
       .from('ratings')
-      .select('beer_id, rating, user_name');
+      .select('beer_id, taste, feel, user_name');
 
     if (error) {
       throw new Error(error.message);

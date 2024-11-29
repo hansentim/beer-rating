@@ -8,18 +8,7 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
-
-interface Beer {
-  id: number;
-  name: string;
-  description: string;
-  alcoholContent: string;
-  imageUrl: string;
-}
-
-interface BeerCardProps {
-  beer: Beer;
-}
+import { BeerCardProps } from '@/types';
 
 export function BeerCard({ beer }: BeerCardProps) {
   return (
