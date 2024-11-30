@@ -6,6 +6,7 @@ import { useUser } from '@/context/userContext';
 import Image from 'next/image';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
+import LoadingAnimation from '@/components/loading-animation';
 
 export default function LoginPage() {
   const { setUserName } = useUser();
@@ -19,20 +20,16 @@ export default function LoginPage() {
       setUserName(name);
       setIsLoading(true);
 
-      await new Promise((resolve) => setTimeout(resolve, 3500));
-
-      router.push('/menu');
+      setTimeout(() => {
+        router.push('/menu');
+      }, 3000);
     }
   };
 
   if (isLoading) {
     return (
-      <main className=' bg-customGreen flex flex-col items-center justify-center min-h-screen p-4 '>
-        <p className='text-center text-lg text-white'>
-          Did you know that Christmas beer, often brewed with spices like
-          cinnamon and nutmeg, has been a festive tradition in many cultures for
-          centuries?
-        </p>
+      <main className='bg-customGreen flex flex-col items-center justify-center min-h-screen p-4'>
+        <LoadingAnimation />
       </main>
     );
   }
