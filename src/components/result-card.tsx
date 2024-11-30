@@ -10,7 +10,11 @@ export const ResultCard: React.FC<ResultCardProps> = ({
   score,
   userScore,
 }) => {
-  const beer = beers.find((beer) => beer.id === beerId);
+  const beer = beers.find((beer) => beer.id === beerId)!;
+
+  // Limit the beer name length (adjust as needed)
+  const truncatedName =
+    beer?.name.length > 28 ? `${beer.name.slice(0, 22)}...` : beer?.name;
 
   return (
     <Card
@@ -18,7 +22,7 @@ export const ResultCard: React.FC<ResultCardProps> = ({
         rank === 1 ? 'bg-customGreen text-white' : 'bg-yellow-100 text-gray-800'
       }`}
     >
-      <CardContent className='flex items-center space-x-4'>
+      <CardContent className='flex items-center space-x-4 h-full'>
         {/* Rank Circle */}
         <div
           className={`w-10 h-10 flex-shrink-0 rounded-full flex justify-center items-center font-bold border-2 ${
@@ -29,20 +33,20 @@ export const ResultCard: React.FC<ResultCardProps> = ({
         </div>
 
         {/* Beer Image */}
-        <div className='w-20 h-20 flex-shrink-0 relative mt-2'>
+        <div className='w-16 h-16 flex-shrink-0 relative'>
           <Image
             src={beer?.imageUrl || ''}
             alt={beer?.name || 'Beer'}
             fill
-            className=' object-contain'
+            className='object-contain rounded'
           />
         </div>
 
         {/* Beer Details */}
-        <div className='flex flex-col space-y-1'>
+        <div className='flex flex-col justify-center space-y-1'>
           <CardHeader className='p-0'>
-            <CardTitle className='text-lg md:text-xl font-bold truncate'>
-              {beer?.name}
+            <CardTitle className='text-base md:text-base font-bold truncate'>
+              {truncatedName}
             </CardTitle>
           </CardHeader>
           <p className='text-sm'>

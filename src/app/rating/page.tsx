@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group'; // Custom ShadCN-based component
+import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group';
 import { Button } from '@/components/ui/button';
 import { BeerCard } from '@/components/menu-beercard';
 import { supabase } from '../../../supabase';
@@ -61,45 +61,61 @@ export default function BeerRatingPage() {
       <BeerCard beer={currentBeer} />
 
       <div className='space-y-6 mt-6'>
-        <div>
-          <h3 className='text-lg font-bold mb-2'>Taste</h3>
-          <ToggleGroup
-            type='single'
-            value={tasteRating !== null ? tasteRating.toString() : ''}
-            onValueChange={(value) =>
-              setTasteRating(value ? Number(value) : null)
-            }
-          >
-            {[1, 2, 3, 4, 5].map((value) => (
-              <ToggleGroupItem key={value} value={value.toString()}>
-                {value}
-              </ToggleGroupItem>
-            ))}
-          </ToggleGroup>
+        {/* Taste Section */}
+        <div className='flex flex-col space-y-2'>
+          <h3 className='text-lg font-bold'>Taste</h3>
+          <div className='flex justify-between items-center p-2 border border-gray-200 rounded'>
+            <ToggleGroup
+              type='single'
+              value={tasteRating !== null ? tasteRating.toString() : ''}
+              onValueChange={(value) =>
+                setTasteRating(value ? Number(value) : null)
+              }
+              className='flex space-x-2'
+            >
+              {[1, 2, 3, 4, 5].map((value) => (
+                <ToggleGroupItem
+                  key={value}
+                  value={value.toString()}
+                  className='w-12 h-12 flex justify-center items-center border border-gray-300 rounded-full hover:bg-gray-100 focus:ring-2 focus:ring-customGreen focus:outline-none'
+                >
+                  {value}
+                </ToggleGroupItem>
+              ))}
+            </ToggleGroup>
+          </div>
         </div>
 
-        <div>
-          <h3 className='text-lg font-bold mb-2'>Christmas Vibe</h3>
-          <ToggleGroup
-            type='single'
-            value={feelRating !== null ? feelRating.toString() : ''}
-            onValueChange={(value) =>
-              setFeelRating(value ? Number(value) : null)
-            }
-          >
-            {[1, 2, 3, 4, 5].map((value) => (
-              <ToggleGroupItem key={value} value={value.toString()}>
-                {value}
-              </ToggleGroupItem>
-            ))}
-          </ToggleGroup>
+        {/* Christmas Vibe Section */}
+        <div className='flex flex-col space-y-2'>
+          <h3 className='text-lg font-bold'>Christmas Vibe</h3>
+          <div className='flex justify-between items-center p-2 border border-gray-200 rounded'>
+            <ToggleGroup
+              type='single'
+              value={feelRating !== null ? feelRating.toString() : ''}
+              onValueChange={(value) =>
+                setFeelRating(value ? Number(value) : null)
+              }
+              className='flex space-x-2'
+            >
+              {[1, 2, 3, 4, 5].map((value) => (
+                <ToggleGroupItem
+                  key={value}
+                  value={value.toString()}
+                  className='w-12 h-12 flex justify-center items-center border border-gray-300 rounded-full hover:bg-gray-100 focus:ring-2 focus:ring-customGreen focus:outline-none'
+                >
+                  {value}
+                </ToggleGroupItem>
+              ))}
+            </ToggleGroup>
+          </div>
         </div>
       </div>
 
       <div className='mt-8 text-center'>
         <Button
           onClick={handleRatingSubmit}
-          className='w-full bg-customGreen hover:bg-customHoverGreen text-white'
+          className='w-full bg-customGreen hover:bg-customHoverGreen text-white h-14'
           disabled={tasteRating === null || feelRating === null}
         >
           {step + 1 < beers.length
