@@ -79,7 +79,7 @@ export default function BeerRatingPage() {
         </div>
 
         <div>
-          <h3 className='text-lg font-bold mb-2'>Christmas Feel</h3>
+          <h3 className='text-lg font-bold mb-2'>Christmas Vibe</h3>
           <ToggleGroup
             type='single'
             value={feelRating !== null ? feelRating.toString() : ''}
