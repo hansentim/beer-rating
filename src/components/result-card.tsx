@@ -12,9 +12,8 @@ export const ResultCard: React.FC<ResultCardProps> = ({
 }) => {
   const beer = beers.find((beer) => beer.id === beerId)!;
 
-  // Limit the beer name length (adjust as needed)
   const truncatedName =
-    beer?.name.length > 28 ? `${beer.name.slice(0, 22)}...` : beer?.name;
+    beer?.name.length > 21 ? `${beer.name.slice(0, 20)}...` : beer?.name;
 
   return (
     <Card
@@ -22,7 +21,7 @@ export const ResultCard: React.FC<ResultCardProps> = ({
         rank === 1 ? 'bg-customGreen text-white' : 'bg-yellow-100 text-gray-800'
       }`}
     >
-      <CardContent className='flex items-center space-x-4 h-full'>
+      <CardContent className='flex items-center space-x-4 h-full mt-2'>
         {/* Rank Circle */}
         <div
           className={`w-10 h-10 flex-shrink-0 rounded-full flex justify-center items-center font-bold border-2 ${
