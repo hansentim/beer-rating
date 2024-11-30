@@ -41,7 +41,7 @@ export const ResultCard: React.FC<ResultCardProps> = ({
         {/* Beer Details */}
         <div className='flex flex-col space-y-1'>
           <CardHeader className='p-0'>
-            <CardTitle className='text-lg font-semibold'>
+            <CardTitle className='text-lg md:text-xl font-bold truncate'>
               {beer?.name}
             </CardTitle>
           </CardHeader>
