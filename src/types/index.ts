@@ -22,3 +22,24 @@ export interface Beer {
 export interface BeerCardProps {
   beer: Beer;
 }
+
+export interface ResultCardProps {
+  rank: number;
+  beerId: number;
+  score: number;
+  userScore: number;
+}
+
+export interface ResultTabsProps {
+  results: Result[];
+}
+
+interface Result {
+  beerId: number;
+  totalScore: number;
+  tasteScore: number;
+  christmasScore: number;
+  userTotal: number;
+  userTaste: number;
+  userChristmas: number;
+}
