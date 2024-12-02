@@ -1,11 +1,31 @@
-import React from 'react';
+import React, { useState, useMemo } from 'react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { ResultCard } from '@/components/result-card';
 import { ResultTabsProps } from '@/types';
 
 export const ResultTabs: React.FC<ResultTabsProps> = ({ results }) => {
+  const [activeTab, setActiveTab] = useState<'total' | 'taste' | 'christmas'>(
+    'total'
+  );
+
+  const sortedResults = useMemo(() => {
+    if (activeTab === 'taste') {
+      return [...results].sort((a, b) => b.tasteScore - a.tasteScore);
+    } else if (activeTab === 'christmas') {
+      return [...results].sort((a, b) => b.christmasScore - a.christmasScore);
+    }
+
+    return [...results].sort((a, b) => b.totalScore - a.totalScore);
+  }, [results, activeTab]);
+
   return (
-    <Tabs defaultValue='total' className='w-full'>
+    <Tabs
+      defaultValue='total'
+      className='w-full'
+      onValueChange={(value) =>
+        setActiveTab(value as 'total' | 'taste' | 'christmas')
+      }
+    >
       <TabsList className='flex justify-center mb-4'>
         <TabsTrigger value='total'>Total</TabsTrigger>
         <TabsTrigger value='taste'>Taste</TabsTrigger>
@@ -13,7 +33,7 @@ export const ResultTabs: React.FC<ResultTabsProps> = ({ results }) => {
       </TabsList>
 
       <TabsContent value='total'>
-        {results.map((result, index) => (
+        {sortedResults.map((result, index) => (
           <ResultCard
             key={result.beerId}
             rank={index + 1}
@@ -25,7 +45,7 @@ export const ResultTabs: React.FC<ResultTabsProps> = ({ results }) => {
       </TabsContent>
 
       <TabsContent value='taste'>
-        {results.map((result, index) => (
+        {sortedResults.map((result, index) => (
           <ResultCard
             key={result.beerId}
             rank={index + 1}
@@ -37,7 +57,7 @@ export const ResultTabs: React.FC<ResultTabsProps> = ({ results }) => {
       </TabsContent>
 
       <TabsContent value='christmas'>
-        {results.map((result, index) => (
+        {sortedResults.map((result, index) => (
           <ResultCard
             key={result.beerId}
             rank={index + 1}
