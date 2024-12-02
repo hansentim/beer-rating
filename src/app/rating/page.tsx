@@ -50,7 +50,7 @@ export default function BeerRatingPage() {
       } else {
         setIsLoading(true);
 
-        await new Promise((resolve) => setTimeout(resolve, 3000));
+        await new Promise((resolve) => setTimeout(resolve, 2500));
         router.push('/results');
       }
     } catch (e) {
@@ -128,7 +128,11 @@ export default function BeerRatingPage() {
       <div className='mt-8 text-center'>
         <Button
           onClick={handleRatingSubmit}
-          className='w-full bg-customGreen hover:bg-customHoverGreen text-white h-14'
+          className={`w-full h-14 font-bold ${
+            step + 1 < beers.length
+              ? 'bg-customGreen hover:bg-customHoverGreen text-white'
+              : 'bg-orange-900 hover:bg-orange-700 text-white '
+          }`}
           disabled={tasteRating === null || feelRating === null}
         >
           {step + 1 < beers.length

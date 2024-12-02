@@ -25,7 +25,7 @@ export default function LoginPage() {
       setUserName(name);
       setIsLoading(true);
 
-      await new Promise((resolve) => setTimeout(resolve, 3500));
+      await new Promise((resolve) => setTimeout(resolve, 3000));
 
       router.push('/menu');
     }
@@ -45,8 +45,8 @@ export default function LoginPage() {
         <Image
           src='/images/skate.png'
           alt='Christmas Tree'
-          width={300}
-          height={300}
+          width={260}
+          height={260}
           className='mx-auto'
         />
       </div>
