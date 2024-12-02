@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import dynamic from 'next/dynamic';
 import { useRouter } from 'next/navigation';
 import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group';
 import { Button } from '@/components/ui/button';
@@ -9,11 +10,16 @@ import { supabase } from '../../../supabase';
 import { useUser } from '@/context/userContext';
 import { beers } from '@/data/beers';
 
+const ResultAnimation = dynamic(() => import('@/components/result-animation'), {
+  ssr: false,
+});
+
 export default function BeerRatingPage() {
   const router = useRouter();
   const [step, setStep] = useState(0);
   const [tasteRating, setTasteRating] = useState<number | null>(null);
   const [feelRating, setFeelRating] = useState<number | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
   const { userName } = useUser();
 
   const currentBeer = beers[step];
@@ -42,12 +48,19 @@ export default function BeerRatingPage() {
         setFeelRating(null);
         setStep(step + 1);
       } else {
+        setIsLoading(true);
+
+        await new Promise((resolve) => setTimeout(resolve, 3000));
         router.push('/results');
       }
     } catch (e) {
       console.error('Error submitting rating:', e);
     }
   };
+
+  if (isLoading) {
+    return <ResultAnimation />;
+  }
 
   return (
     <main className='p-4'>
