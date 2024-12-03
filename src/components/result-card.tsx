@@ -3,8 +3,14 @@ import Image from 'next/image';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { beers } from '@/data/beers';
 import { ResultCardProps } from '@/types';
-import Player from 'lottie-react';
-import animationData from '@/lottie/celebrate.json';
+import dynamic from 'next/dynamic';
+
+const TopRankAnimation = dynamic(
+  () => import('@/components/celebrate-animation'),
+  {
+    ssr: false,
+  }
+);
 
 export const ResultCard: React.FC<ResultCardProps> = ({
   rank,
@@ -15,7 +21,7 @@ export const ResultCard: React.FC<ResultCardProps> = ({
   const beer = beers.find((beer) => beer.id === beerId)!;
 
   const truncatedName =
-    beer?.name.length > 21 ? `${beer.name.slice(0, 20)}...` : beer?.name;
+    beer?.name.length > 20 ? `${beer.name.slice(0, 19)}...` : beer?.name;
 
   return (
     <Card
@@ -25,8 +31,8 @@ export const ResultCard: React.FC<ResultCardProps> = ({
     >
       {/* Lottie Animation */}
       {rank === 1 && (
-        <div className='absolute top-0 right-0 w-16 h-16'>
-          <Player animationData={animationData} loop autoplay />
+        <div className='absolute top-0 right-0'>
+          <TopRankAnimation />
         </div>
       )}
 
