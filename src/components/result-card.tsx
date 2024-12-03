@@ -3,6 +3,8 @@ import Image from 'next/image';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { beers } from '@/data/beers';
 import { ResultCardProps } from '@/types';
+import Player from 'lottie-react';
+import animationData from '@/lottie/celebrate.json';
 
 export const ResultCard: React.FC<ResultCardProps> = ({
   rank,
@@ -21,6 +23,13 @@ export const ResultCard: React.FC<ResultCardProps> = ({
         rank === 1 ? 'bg-customGreen text-white' : 'bg-yellow-100 text-gray-800'
       }`}
     >
+      {/* Lottie Animation */}
+      {rank === 1 && (
+        <div className='absolute top-0 right-0 w-16 h-16'>
+          <Player animationData={animationData} loop autoplay />
+        </div>
+      )}
+
       <CardContent className='flex items-center space-x-4 h-full mt-2'>
         {/* Rank Circle */}
         <div
