@@ -3,9 +3,15 @@
 @tailwind utilities;
 
 body {
-  font-family: Arial, Helvetica, sans-serif;
+  @apply font-afacad;
 }
 
+/* html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+} */
 @layer base {
   :root {
     --background: 0 0% 100%;

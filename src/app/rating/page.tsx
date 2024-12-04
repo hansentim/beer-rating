@@ -59,7 +59,11 @@ export default function BeerRatingPage() {
   };
 
   if (isLoading) {
-    return <ResultAnimation />;
+    return (
+      <main className='bg-customGreen flex flex-col items-center justify-center p-4 space-y-4 fixed inset-0'>
+        <ResultAnimation />
+      </main>
+    );
   }
 
   return (

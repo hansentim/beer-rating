@@ -10,12 +10,15 @@ export default {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        afacad: ['var(--font-afacad)', 'sans-serif'],
+      },
       colors: {
         background: 'hsl(var(--background))',
         foreground: 'hsl(var(--foreground))',
         customYellow: '#F4F0BB',
-        customGreen: '#226f54',
-        customHoverGreen: '#35a77f',
+        customGreen: '#226F54',
+        customHoverGreen: '#18543F',
         card: {
           DEFAULT: 'hsl(var(--card))',
           foreground: 'hsl(var(--card-foreground))',

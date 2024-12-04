@@ -33,7 +33,7 @@ export default function LoginPage() {
 
   if (isLoading) {
     return (
-      <main className='bg-customGreen flex flex-col items-center justify-center min-h-screen p-4 space-y-4'>
+      <main className='bg-customGreen flex flex-col items-center justify-center p-4 space-y-4 fixed inset-0'>
         <LoadingAnimation />
       </main>
     );
@@ -41,37 +41,37 @@ export default function LoginPage() {
 
   return (
     <main className='flex flex-col items-center justify-center min-h-screen p-4 bg-white'>
-      <div className='mb-8'>
+      <div className='mb-4'>
         <Image
           src='/images/skate.png'
           alt='Christmas Tree'
-          width={260}
-          height={260}
+          width={200}
+          height={200}
           className='mx-auto'
         />
       </div>
 
       <div className='w-full max-w-sm'>
-        <h1 className='text-3xl font-bold mb-2'>
+        <h1 className='text-4xl font-bold mb-2'>
           <span className='text-customGreen'>Hello</span>, beer drinker 🍻
         </h1>
 
-        <p className='text-gray-500 mb-6'>
-          We need to know who you are before we get going
+        <p className='text-xl text-#484848 mb-8'>
+          Let’s start with your name so we know who’s joining the tasting!
         </p>
 
         <form onSubmit={handleSubmit} className='space-y-4'>
           <Input
             type='text'
-            placeholder='Name'
+            placeholder='Enter your name'
             value={name}
             onChange={(e) => setName(e.target.value)}
-            className='w-full h-14'
+            className='w-full h-16'
           />
 
           <Button
             type='submit'
-            className='w-full h-14 bg-customGreen hover:bg-customHoverGreen text-white'
+            className='w-full text-base h-16 bg-customGreen hover:bg-customHoverGreen text-white font-bold'
           >
             Continue
           </Button>
