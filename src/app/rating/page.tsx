@@ -5,10 +5,11 @@ import dynamic from 'next/dynamic';
 import { useRouter } from 'next/navigation';
 import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group';
 import { Button } from '@/components/ui/button';
-import { BeerCard } from '@/components/menu-beercard';
+import { BeerCard } from '@/components/rating-card';
 import { supabase } from '../../../supabase';
 import { useUser } from '@/context/userContext';
 import { beers } from '@/data/beers';
+import Logo from '@/components/logo';
 
 const ResultAnimation = dynamic(() => import('@/components/result-animation'), {
   ssr: false,
@@ -63,83 +64,106 @@ export default function BeerRatingPage() {
   }
 
   return (
-    <main className='p-4'>
-      <h1 className='text-2xl font-bold text-center mb-4'>
-        Beer {step + 1} 🍺
-      </h1>
-      <p className='text-center mb-6 text-gray-600'>
-        Rate the taste and Christmas feel of this beer!
-      </p>
+    <>
+      <Logo />
+      <main className='p-4'>
+        <div className='w-full max-w-sm mx-auto'>
+          {/* Title */}
+          <h1 className='text-4xl text-customGreen font-bold text-left mb-4'>
+            Beer {step + 1}
+          </h1>
+          {/* Description */}
+          <p className='text-left mb-6 text-custuomSubTitle'>
+            Take a sip, then rate the beer from 1 to 5 for its taste and
+            Christmas vibe, spirit, with 5 being the absolute best in your book!
+          </p>
 
-      <BeerCard beer={currentBeer} />
+          {/* Beer Card */}
+          <BeerCard beer={currentBeer} />
 
-      <div className='space-y-6 mt-6'>
-        {/* Taste Section */}
-        <div className='flex flex-col space-y-2'>
-          <h3 className='text-lg font-bold'>Taste</h3>
-          <div className='flex justify-between items-center p-2 border border-gray-200 rounded'>
-            <ToggleGroup
-              type='single'
-              value={tasteRating !== null ? tasteRating.toString() : ''}
-              onValueChange={(value) =>
-                setTasteRating(value ? Number(value) : null)
-              }
-              className='flex space-x-2'
-            >
-              {[1, 2, 3, 4, 5].map((value) => (
-                <ToggleGroupItem
-                  key={value}
-                  value={value.toString()}
-                  className='w-12 h-12 flex justify-center items-center border border-gray-300 rounded-full hover:bg-gray-100 focus:ring-2 focus:ring-customGreen focus:outline-none'
+          {/* Ratings Section */}
+          <div className='space-y-6 mt-6'>
+            {/* Taste Section */}
+            <div className='flex flex-col space-y-2'>
+              <h3 className='text-lg font-bold'>Taste</h3>
+              <div className='p-2 border border-gray-200 rounded'>
+                <ToggleGroup
+                  type='single'
+                  value={tasteRating !== null ? tasteRating.toString() : ''}
+                  onValueChange={(value) =>
+                    setTasteRating(value ? Number(value) : null)
+                  }
+                  className='flex justify-between'
                 >
-                  {value}
-                </ToggleGroupItem>
-              ))}
-            </ToggleGroup>
+                  {[1, 2, 3, 4, 5].map((value) => (
+                    <ToggleGroupItem
+                      key={value}
+                      value={value.toString()}
+                      className={`w-12 h-12 flex justify-center items-center border rounded-full font-bold transition-colors focus:outline-none
+                  ${
+                    tasteRating === value
+                      ? 'bg-customGreen  text-white border-customGreen ring-2 ring-customGreen'
+                      : 'bg-white text-gray-800 border-gray-300'
+                  }
+                 hover:bg-customLightGreen   data-[state=on]:bg-customToggleGreen data-[state=on]:text-white data-[state=on]:ring-white`}
+                    >
+                      {value}
+                    </ToggleGroupItem>
+                  ))}
+                </ToggleGroup>
+              </div>
+            </div>
+
+            {/* Christmas Vibe Section */}
+            <div className='flex flex-col space-y-2'>
+              <h3 className='text-lg font-bold'>Christmas Vibe</h3>
+              <div className='p-2 border border-gray-200 rounded'>
+                <ToggleGroup
+                  type='single'
+                  value={feelRating !== null ? feelRating.toString() : ''}
+                  onValueChange={(value) =>
+                    setFeelRating(value ? Number(value) : null)
+                  }
+                  className='flex justify-between'
+                >
+                  {[1, 2, 3, 4, 5].map((value) => (
+                    <ToggleGroupItem
+                      key={value}
+                      value={value.toString()}
+                      className={`w-12 h-12 flex justify-center items-center border rounded-full font-bold transition-colors focus:outline-none
+                  ${
+                    feelRating === value
+                      ? 'bg-customGreen  text-white border-customGreen ring-2 ring-customGreen'
+                      : 'bg-white text-gray-800 border-gray-300'
+                  }
+                 hover:bg-customLightGreen   data-[state=on]:bg-customToggleGreen data-[state=on]:text-white data-[state=on]:ring-white`}
+                    >
+                      {value}
+                    </ToggleGroupItem>
+                  ))}
+                </ToggleGroup>
+              </div>
+            </div>
+          </div>
+
+          {/* Buttons */}
+          <div className='mt-8 text-center'>
+            <Button
+              onClick={handleRatingSubmit}
+              className={`w-full h-14 font-bold ${
+                step + 1 < beers.length
+                  ? 'bg-customGreen hover:bg-customHoverGreen text-white'
+                  : 'bg-customBrown hover:bg-customBrownHover text-white '
+              }`}
+              disabled={tasteRating === null || feelRating === null}
+            >
+              {step + 1 < beers.length
+                ? 'Save rating & go to next beer'
+                : 'Submit Ratings & See Results'}
+            </Button>
           </div>
         </div>
-
-        {/* Christmas Vibe Section */}
-        <div className='flex flex-col space-y-2'>
-          <h3 className='text-lg font-bold'>Christmas Vibe</h3>
-          <div className='flex justify-between items-center p-2 border border-gray-200 rounded'>
-            <ToggleGroup
-              type='single'
-              value={feelRating !== null ? feelRating.toString() : ''}
-              onValueChange={(value) =>
-                setFeelRating(value ? Number(value) : null)
-              }
-              className='flex space-x-2'
-            >
-              {[1, 2, 3, 4, 5].map((value) => (
-                <ToggleGroupItem
-                  key={value}
-                  value={value.toString()}
-                  className='w-12 h-12 flex justify-center items-center border border-gray-300 rounded-full hover:bg-gray-100 focus:ring-2 focus:ring-customGreen focus:outline-none'
-                >
-                  {value}
-                </ToggleGroupItem>
-              ))}
-            </ToggleGroup>
-          </div>
-        </div>
-      </div>
-
-      <div className='mt-8 text-center'>
-        <Button
-          onClick={handleRatingSubmit}
-          className={`w-full h-14 font-bold ${
-            step + 1 < beers.length
-              ? 'bg-customGreen hover:bg-customHoverGreen text-white'
-              : 'bg-orange-900 hover:bg-orange-700 text-white '
-          }`}
-          disabled={tasteRating === null || feelRating === null}
-        >
-          {step + 1 < beers.length
-            ? 'Save rating & go to next beer'
-            : 'Submit Ratings & See Results'}
-        </Button>
-      </div>
-    </main>
+      </main>
+    </>
   );
 }

@@ -7,7 +7,7 @@ export const beers = [
     location: 'Landskrona',
     ml: '330 ml',
     imageUrl: '/images/lelle.webp',
-    alcoholContent: '6 % vol.',
+    alcoholContent: '6 % vol',
   },
   {
     id: 2,
@@ -17,7 +17,7 @@ export const beers = [
     location: 'Göteborg',
     ml: '440 ml',
     imageUrl: '/images/stigberg.webp',
-    alcoholContent: '6,8 % vol.',
+    alcoholContent: '6,8 % vol',
   },
   {
     id: 3,
@@ -27,7 +27,7 @@ export const beers = [
     location: 'Partille',
     ml: '330 ml',
     imageUrl: '/images/poppel.webp',
-    alcoholContent: '4,5 % vol.',
+    alcoholContent: '4,5 % vol',
   },
   {
     id: 4,
@@ -37,7 +37,7 @@ export const beers = [
     location: 'Helsingborg',
     ml: '330 ml',
     imageUrl: '/images/honey.webp',
-    alcoholContent: '5,6 % vol.',
+    alcoholContent: '5,6 % vol',
   },
   {
     id: 5,
@@ -47,7 +47,7 @@ export const beers = [
     location: 'Västerås',
     ml: '330 ml',
     imageUrl: '/images/copper.webp',
-    alcoholContent: '5 % vol.',
+    alcoholContent: '5 % vol',
   },
   {
     id: 6,
@@ -57,6 +57,6 @@ export const beers = [
     location: 'Knivsta',
     ml: '330 ml',
     imageUrl: '/images/train.webp',
-    alcoholContent: '0.3 % vol.',
+    alcoholContent: '0.3 % vol',
   },
 ];
