@@ -75,7 +75,7 @@ export default function BeerRatingPage() {
           {/* Description */}
           <p className='text-left mb-6 text-custuomSubTitle'>
             Take a sip, then rate the beer from 1 to 5 for its taste and
-            Christmas vibe, spirit, with 5 being the absolute best in your book!
+            Christmas vibe, with 5 being the absolute best in your book!
           </p>
 
           {/* Beer Card */}

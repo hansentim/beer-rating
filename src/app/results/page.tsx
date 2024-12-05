@@ -120,9 +120,13 @@ export default function ResultsPage() {
       {/* Full-Screen Animation Overlay */}
       {showAnimation && <TopRankAnimation />}
 
-      <h1 className='text-2xl font-bold text-center mb-6'>
-        <span className='text-customGreen'>Results</span>, tasting menu 🍻
+      <h1 className='text-4xl text-left font-bold '>
+        And, the
+        <span className='text-customGreen'> winner</span> is...
       </h1>
+      <p className='text-left text-base text-custuomSubTitle mb-6'>
+        Use the filters to view the results based on each rating type.{' '}
+      </p>
 
       <div className='text-center mb-6'>
         <Button
