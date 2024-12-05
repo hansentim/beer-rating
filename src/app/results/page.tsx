@@ -8,6 +8,7 @@ import { useUser } from '@/context/userContext';
 import { ResultTabs } from '@/components/result-tabs';
 import { SkeletonResultCard } from '@/components/skeleton-result-card';
 import dynamic from 'next/dynamic';
+import Logo from '@/components/logo';
 
 const TopRankAnimation = dynamic(
   () => import('@/components/celebrate-animation'),
@@ -116,36 +117,39 @@ export default function ResultsPage() {
   }
 
   return (
-    <main className='p-4 relative'>
-      {/* Full-Screen Animation Overlay */}
-      {showAnimation && (
-        <div
-          className={`absolute inset-0 z-50 flex items-center justify-center ${
-            showAnimation ? 'pointer-events-auto' : 'pointer-events-none'
-          }`}
-        >
-          <TopRankAnimation />
+    <>
+      <Logo />
+      <main className='p-4 relative'>
+        {/* Full-Screen Animation Overlay */}
+        {showAnimation && (
+          <div
+            className={`absolute inset-0 z-50 flex items-center justify-center ${
+              showAnimation ? 'pointer-events-auto' : 'pointer-events-none'
+            }`}
+          >
+            <TopRankAnimation />
+          </div>
+        )}
+
+        <h1 className='text-4xl text-left font-bold mt-4'>
+          And, the
+          <span className='text-customGreen'> winner</span> is...
+        </h1>
+        <p className='text-left text-base text-custuomSubTitle mb-6'>
+          Use the filters to view the results based on each rating type.{' '}
+        </p>
+
+        <div className='text-center mb-6'>
+          <Button
+            onClick={() => router.push('/menu')}
+            variant='outline'
+            className='h-16 w-full font-bold'
+          >
+            Back to tasting menu
+          </Button>
         </div>
-      )}
-
-      <h1 className='text-4xl text-left font-bold '>
-        And, the
-        <span className='text-customGreen'> winner</span> is...
-      </h1>
-      <p className='text-left text-base text-custuomSubTitle mb-6'>
-        Use the filters to view the results based on each rating type.{' '}
-      </p>
-
-      <div className='text-center mb-6'>
-        <Button
-          onClick={() => router.push('/menu')}
-          variant='outline'
-          className='h-16 w-full font-bold'
-        >
-          Back to tasting menu
-        </Button>
-      </div>
-      <ResultTabs results={results} />
-    </main>
+        <ResultTabs results={results} />
+      </main>
+    </>
   );
 }

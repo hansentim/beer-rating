@@ -26,10 +26,40 @@ export const ResultTabs: React.FC<ResultTabsProps> = ({ results }) => {
         setActiveTab(value as 'total' | 'taste' | 'christmas')
       }
     >
-      <TabsList className='flex justify-center mb-4'>
-        <TabsTrigger value='total'>Total</TabsTrigger>
-        <TabsTrigger value='taste'>Taste</TabsTrigger>
-        <TabsTrigger value='christmas'>Christmas</TabsTrigger>
+      <TabsList className='flex justify-center mb-4 space-x-4 bg-white'>
+        <TabsTrigger
+          value='total'
+          className='px-6 border-black border-2  text-lg font-bold transition-colors rounded-full
+               data-[state=active]:bg-customYellow 
+               data-[state=active]:text-black 
+               data-[state=active]:border-2 
+               data-[state=active]:border-black 
+               hover:bg-customYellowHover hover:text-black'
+        >
+          Total
+        </TabsTrigger>
+        <TabsTrigger
+          value='taste'
+          className='px-6 border-black border-2  text-lg font-bold transition-colors rounded-full
+               data-[state=active]:bg-customYellow 
+               data-[state=active]:text-black 
+               data-[state=active]:border-2 
+               data-[state=active]:border-black 
+               hover:bg-customYellowHover hover:text-black'
+        >
+          Taste
+        </TabsTrigger>
+        <TabsTrigger
+          value='christmas'
+          className='px-6 border-black border-2  text-lg font-bold transition-colors rounded-full
+          data-[state=active]:bg-customYellow 
+          data-[state=active]:text-black 
+          data-[state=active]:border-2 
+          data-[state=active]:border-black 
+          hover:bg-customYellowHover hover:text-black'
+        >
+          Christmas
+        </TabsTrigger>
       </TabsList>
 
       <TabsContent value='total'>

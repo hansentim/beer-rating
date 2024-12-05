@@ -17,6 +17,7 @@ export default {
         background: 'hsl(var(--background))',
         foreground: 'hsl(var(--foreground))',
         customYellow: '#F4F0BB',
+        customYellowHover: '#d6d2a1',
         customGreen: '#226F54',
         customHoverGreen: '#18543F',
         custuomSubTitle: '#484848',
