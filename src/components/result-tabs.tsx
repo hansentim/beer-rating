@@ -27,7 +27,10 @@ export const ResultTabs: React.FC<ResultTabsProps> = ({ results }) => {
       }
     >
       <TabsList className='flex justify-center mb-4'>
-        <TabsTrigger value='total'>Total</TabsTrigger>
+        <TabsTrigger
+          className='data-[state=on]:bg-customGreen text-white'
+          value='total'
+        ></TabsTrigger>
         <TabsTrigger value='taste'>Taste</TabsTrigger>
         <TabsTrigger value='christmas'>Christmas</TabsTrigger>
       </TabsList>

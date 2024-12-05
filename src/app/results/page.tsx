@@ -132,7 +132,7 @@ export default function ResultsPage() {
         <Button
           onClick={() => router.push('/menu')}
           variant='outline'
-          className='h-12 w-full font-bold'
+          className='h-16 w-full font-bold'
         >
           Back to tasting menu
         </Button>
