@@ -29,16 +29,16 @@ export function BeerCard({ beer }: BeerCardProps) {
 
         {/* Badge Section */}
         <div className='flex flex-wrap gap-2 mt-4'>
-          <Badge className='bg-customBadgeGreen rounded-full text-black'>
+          <Badge className='bg-customBadgeGreen rounded-full text-black shadow-none'>
             {beer.taste}
           </Badge>
-          <Badge className='bg-customBadgeGreen2 rounded-full text-black'>
+          <Badge className='bg-customBadgeGreen2 rounded-full text-black shadow-none'>
             {beer.location}
           </Badge>
-          <Badge className='bg-customBadgePink rounded-full text-black'>
+          <Badge className='bg-customBadgePink rounded-full text-black shadow-none'>
             {beer.ml}
           </Badge>
-          <Badge className='bg-customBadgePurple rounded-full text-black'>
+          <Badge className='bg-customBadgePurple rounded-full text-black shadow-none'>
             {beer.alcoholContent}
           </Badge>
         </div>

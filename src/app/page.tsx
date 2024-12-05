@@ -82,7 +82,7 @@ export default function LoginPage() {
             href="https://www.geshdo.com" 
             target="_blank" 
             rel="noopener noreferrer" 
-            className="text-customLink hover:underline"
+            className="text-customLink hover:text-customHoverGreen underline"
           >
             GESHDO
           </a>
