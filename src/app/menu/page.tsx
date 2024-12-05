@@ -25,7 +25,7 @@ export default function MenuPage() {
       <Logo />
       <main className='p-4'>
         <div className='w-full max-w-sm mx-auto mb-6'>
-          <h1 className='text-4xl font-bold text-left mb-2 mt-4'>
+          <h1 className='text-4xl font-bold text-left mb-2 mt-10'>
             <span className='text-customGreen'>{userName},</span> tasting menu
           </h1>
           <p className='text-base text-left mb-6 text-custuomSubTitle'>

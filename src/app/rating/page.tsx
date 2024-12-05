@@ -69,7 +69,7 @@ export default function BeerRatingPage() {
       <main className='p-4'>
         <div className='w-full max-w-sm mx-auto'>
           {/* Title */}
-          <h1 className='text-4xl text-customGreen font-bold text-left mb-2 mt-4'>
+          <h1 className='text-4xl text-customGreen font-bold text-left mb-2 mt-10'>
             Beer {step + 1}
           </h1>
           {/* Description */}

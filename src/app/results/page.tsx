@@ -104,7 +104,7 @@ export default function ResultsPage() {
   if (loading) {
     return (
       <main className='p-4'>
-        <h1 className='text-2xl font-bold text-center mb-6'>
+        <h1 className='text-2xl font-bold text-center mt-4 mb-6'>
           Results, tasting menu
         </h1>
         <ul className='space-y-4'>
@@ -131,7 +131,7 @@ export default function ResultsPage() {
           </div>
         )}
 
-        <h1 className='text-4xl text-left font-bold mt-4'>
+        <h1 className='text-4xl text-left font-bold mt-8'>
           And, the
           <span className='text-customGreen'> winner</span> is...
         </h1>
