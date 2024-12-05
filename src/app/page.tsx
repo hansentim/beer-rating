@@ -47,12 +47,12 @@ export default function LoginPage() {
             alt='Christmas Tree'
             width={180}
             height={180}
-            className='mx-auto'
+            className='mx-auto mt-4 mb-6'
           />
-          <h1 className='text-4xl font-bold mt-2 text-left'>
+          <h1 className='text-4xl font-bold text-left'>
             <span className='text-customGreen'>Hello</span>, beer drinker 🍻
           </h1>
-          <p className='text-xl text-left mt-2 mb-4 text-custuomSubTitle'>
+          <p className='text-xl text-left mt-2 mb-2 text-custuomSubTitle'>
             Let’s start with your name so we know who’s joining the tasting!
           </p>
         </div>
@@ -67,7 +67,7 @@ export default function LoginPage() {
             placeholder='Enter your name'
             value={name}
             onChange={(e) => setName(e.target.value)}
-            className='w-full h-16'
+            className='w-full h-16 mb-2'
           />
           <Button
             type='submit'
@@ -76,6 +76,17 @@ export default function LoginPage() {
             Continue
           </Button>
         </form>
+        <p className="text-xs text-center mt-8 mb-2 text-customLightgrey">
+          Powered by{" "}
+          <a 
+            href="https://www.geshdo.com" 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            className="text-customLink hover:underline"
+          >
+            GESHDO
+          </a>
+      </p>
       </main>
     </>
   );

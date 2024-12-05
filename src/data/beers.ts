@@ -11,7 +11,7 @@ export const beers = [
   },
   {
     id: 2,
-    name: 'Stigbergets Juleljus NEIPA',
+    name: 'Juleljus',
     brewery: 'Stigberget',
     taste: 'Neipa',
     location: 'Göteborg',
