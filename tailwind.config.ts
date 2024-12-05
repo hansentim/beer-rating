@@ -19,6 +19,11 @@ export default {
         customYellow: '#F4F0BB',
         customGreen: '#226F54',
         customHoverGreen: '#18543F',
+        custuomSubTitle: '#484848',
+        customBadgeGreen: '#48C79A',
+        customBadgeGreen2: '#A8E4CF',
+        customBadgePink: '#EC9197',
+        customBadgePurple: '#9589FF',
         card: {
           DEFAULT: 'hsl(var(--card))',
           foreground: 'hsl(var(--card-foreground))',

@@ -14,7 +14,10 @@ export interface BeerResult {
 export interface Beer {
   id: number;
   name: string;
-  description: string;
+  brewery: string;
+  taste: string;
+  location: string;
+  ml: string;
   alcoholContent: string;
   imageUrl: string;
 }

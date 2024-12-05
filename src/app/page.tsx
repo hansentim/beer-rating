@@ -52,7 +52,7 @@ export default function LoginPage() {
           <h1 className='text-4xl font-bold mt-2 text-left'>
             <span className='text-customGreen'>Hello</span>, beer drinker 🍻
           </h1>
-          <p className='text-xl text-left mt-2 mb-4'>
+          <p className='text-xl text-left mt-2 mb-4 text-custuomSubTitle'>
             Let’s start with your name so we know who’s joining the tasting!
           </p>
         </div>

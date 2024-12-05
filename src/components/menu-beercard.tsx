@@ -1,20 +1,16 @@
 'use client';
 import Image from 'next/image';
 import React from 'react';
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { BeerCardProps } from '@/types';
+import { Badge } from '@/components/ui/badge';
 
 export function BeerCard({ beer }: BeerCardProps) {
   return (
-    <Card className='relative w-full max-w-sm mx-auto overflow-hidden rounded-lg bg-customYellow '>
-      <CardContent className='relative z-10 p-4'>
-        <div className='w-full h-40 relative '>
+    <Card className='relative w-full max-w-sm mx-auto overflow-hidden rounded-lg bg-customYellow shadow-none'>
+      <CardContent className='p-4'>
+        {/* Image Section */}
+        <div className='w-full h-40 relative mb-4'>
           <Image
             src={beer.imageUrl}
             alt={beer.name}
@@ -22,15 +18,30 @@ export function BeerCard({ beer }: BeerCardProps) {
             className='object-contain rounded-lg'
           />
         </div>
-        <CardHeader>
-          <CardTitle className='text-xl font-bold'>{beer.name}</CardTitle>
-          <CardDescription className='text-sm text-gray-600'>
-            {beer.description}
-          </CardDescription>
-          <p className='text-sm text-gray-500'>
-            Alcohol: {beer.alcoholContent}
-          </p>
+
+        {/* Header Section */}
+        <CardHeader className='p-0'>
+          <CardTitle className='text-4xl font-bold text-black'>
+            {beer.name}
+          </CardTitle>
+          <p className='text-base font-medium text-black'>{beer.brewery}</p>
         </CardHeader>
+
+        {/* Badge Section */}
+        <div className='flex flex-wrap gap-2 mt-4'>
+          <Badge className='bg-customBadgeGreen rounded-full text-black'>
+            {beer.taste}
+          </Badge>
+          <Badge className='bg-customBadgeGreen2 rounded-full text-black'>
+            {beer.location}
+          </Badge>
+          <Badge className='bg-customBadgePink rounded-full text-black'>
+            {beer.ml}
+          </Badge>
+          <Badge className='bg-customBadgePurple rounded-full text-black'>
+            {beer.alcoholContent}
+          </Badge>
+        </div>
       </CardContent>
     </Card>
   );
