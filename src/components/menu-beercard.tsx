@@ -12,8 +12,7 @@ import { BeerCardProps } from '@/types';
 
 export function BeerCard({ beer }: BeerCardProps) {
   return (
-    <Card className='relative w-full max-w-sm mx-auto overflow-hidden rounded-lg '>
-      <div className='absolute top-0 left-0 w-full h-1/3 bg-customYellow z-0'></div>
+    <Card className='relative w-full max-w-sm mx-auto overflow-hidden rounded-lg bg-customYellow '>
       <CardContent className='relative z-10 p-4'>
         <div className='w-full h-40 relative '>
           <Image

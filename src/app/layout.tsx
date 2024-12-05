@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import { Afacad } from 'next/font/google';
 import './globals.css';
 import { UserProvider } from '@/context/userContext';
-import Logo from '@/components/logo';
+//import Logo from '@/components/logo';
 
 const afacad = Afacad({
   subsets: ['latin'],
@@ -24,7 +24,7 @@ export default function RootLayout({
     <html lang='en'>
       <body className={`${afacad.variable} antialiased`}>
         <UserProvider>
-          <Logo />
+          {/* <Logo /> */}
 
           {/* <div className='mt-20'> */}
           <main className='mt-6'>{children}</main>

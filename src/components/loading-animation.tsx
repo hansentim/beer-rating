@@ -16,14 +16,14 @@ export default function LoadingAnimation() {
   }
 
   return (
-    <div className='flex flex-col justify-center items-center min-h-screen bg-customGreen'>
+    <div className='bg-customGreen flex flex-col items-center justify-center p-4 space-y-4 fixed inset-0'>
       <Player
         animationData={animationData}
         loop
         autoplay
         style={{ height: '300px', width: '300px' }}
       />
-      <p className='text-center text-customYellow text-xl max-w-xl'>
+      <p className='text-center text-customYellow text-base max-w-xl'>
         Did you know that Christmas beer, often brewed with spices like cinnamon
         and nutmeg, has been a festive tradition in many cultures for centuries?
       </p>

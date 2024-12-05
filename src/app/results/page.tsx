@@ -7,6 +7,14 @@ import { useRouter } from 'next/navigation';
 import { useUser } from '@/context/userContext';
 import { ResultTabs } from '@/components/result-tabs';
 import { SkeletonResultCard } from '@/components/skeleton-result-card';
+import dynamic from 'next/dynamic';
+
+const TopRankAnimation = dynamic(
+  () => import('@/components/celebrate-animation'),
+  {
+    ssr: false,
+  }
+);
 
 export default function ResultsPage() {
   const [results, setResults] = useState<
@@ -21,6 +29,7 @@ export default function ResultsPage() {
     }[]
   >([]);
   const [loading, setLoading] = useState(true);
+  const [showAnimation, setShowAnimation] = useState(false);
   const router = useRouter();
   const { userName } = useUser();
 
@@ -74,7 +83,17 @@ export default function ResultsPage() {
         })
       );
 
-      setResults(processedResults.sort((a, b) => b.totalScore - a.totalScore));
+      const sortedResults = processedResults.sort(
+        (a, b) => b.totalScore - a.totalScore
+      );
+      setResults(sortedResults);
+
+      // Trigger animation if top rank exists
+      if (sortedResults[0]?.beerId) {
+        setShowAnimation(true);
+        setTimeout(() => setShowAnimation(false), 9000);
+      }
+
       setLoading(false);
     };
 
@@ -97,7 +116,10 @@ export default function ResultsPage() {
   }
 
   return (
-    <main className='p-4'>
+    <main className='p-4 relative'>
+      {/* Full-Screen Animation Overlay */}
+      {showAnimation && <TopRankAnimation />}
+
       <h1 className='text-2xl font-bold text-center mb-6'>
         <span className='text-customGreen'>Results</span>, tasting menu 🍻
       </h1>

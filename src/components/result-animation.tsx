@@ -16,13 +16,16 @@ export default function ResultAnimation() {
   }
 
   return (
-    <div className='flex justify-center items-center min-h-screen bg-customGreen'>
+    <div className='bg-customGreen flex flex-col items-center justify-center p-4 space-y-4 fixed inset-0'>
       <Player
         animationData={animationData}
         loop
         autoplay
         style={{ height: '300px', width: '300px' }}
       />
+      <p className='text-center text-customYellow text-base max-w-xl'>
+        Santa is fetching the results...
+      </p>
     </div>
   );
 }

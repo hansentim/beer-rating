@@ -7,6 +7,7 @@ import { useUser } from '@/context/userContext';
 import Image from 'next/image';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
+import Logo from '@/components/logo';
 
 const LoadingAnimation = dynamic(
   () => import('@/components/loading-animation'),
@@ -32,35 +33,35 @@ export default function LoginPage() {
   };
 
   if (isLoading) {
-    return (
-      <main className='bg-customGreen flex flex-col items-center justify-center p-4 space-y-4 fixed inset-0'>
-        <LoadingAnimation />
-      </main>
-    );
+    return <LoadingAnimation />;
   }
 
   return (
-    <main className='flex flex-col items-center justify-center min-h-screen p-4 bg-white'>
-      <div className='mb-4'>
-        <Image
-          src='/images/skate.png'
-          alt='Christmas Tree'
-          width={200}
-          height={200}
-          className='mx-auto'
-        />
-      </div>
+    <>
+      <Logo />
+      <main className='flex flex-col justify-center items-center p-4 bg-white'>
+        {/* Header Section */}
+        <div className='flex flex-col items-start w-full max-w-sm'>
+          <Image
+            src='/images/skate.png'
+            alt='Christmas Tree'
+            width={180}
+            height={180}
+            className='mx-auto'
+          />
+          <h1 className='text-4xl font-bold mt-2 text-left'>
+            <span className='text-customGreen'>Hello</span>, beer drinker 🍻
+          </h1>
+          <p className='text-xl text-left mt-2 mb-4'>
+            Let’s start with your name so we know who’s joining the tasting!
+          </p>
+        </div>
 
-      <div className='w-full max-w-sm'>
-        <h1 className='text-4xl font-bold mb-2'>
-          <span className='text-customGreen'>Hello</span>, beer drinker 🍻
-        </h1>
-
-        <p className='text-xl text-#484848 mb-8'>
-          Let’s start with your name so we know who’s joining the tasting!
-        </p>
-
-        <form onSubmit={handleSubmit} className='space-y-4'>
+        {/* Form Section */}
+        <form
+          onSubmit={handleSubmit}
+          className='flex flex-col items-center w-full max-w-sm mt-4 space-y-3'
+        >
           <Input
             type='text'
             placeholder='Enter your name'
@@ -68,7 +69,6 @@ export default function LoginPage() {
             onChange={(e) => setName(e.target.value)}
             className='w-full h-16'
           />
-
           <Button
             type='submit'
             className='w-full text-base h-16 bg-customGreen hover:bg-customHoverGreen text-white font-bold'
@@ -76,7 +76,7 @@ export default function LoginPage() {
             Continue
           </Button>
         </form>
-      </div>
-    </main>
+      </main>
+    </>
   );
 }

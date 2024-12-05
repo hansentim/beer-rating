@@ -3,14 +3,14 @@ import Image from 'next/image';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { beers } from '@/data/beers';
 import { ResultCardProps } from '@/types';
-import dynamic from 'next/dynamic';
+//import dynamic from 'next/dynamic';
 
-const TopRankAnimation = dynamic(
-  () => import('@/components/celebrate-animation'),
-  {
-    ssr: false,
-  }
-);
+// const TopRankAnimation = dynamic(
+//   () => import('@/components/celebrate-animation'),
+//   {
+//     ssr: false,
+//   }
+// );
 
 export const ResultCard: React.FC<ResultCardProps> = ({
   rank,
@@ -26,15 +26,16 @@ export const ResultCard: React.FC<ResultCardProps> = ({
   return (
     <Card
       className={`relative rounded h-28 mb-2 ${
-        rank === 1 ? 'bg-customGreen text-white' : 'bg-yellow-100 text-gray-800'
+        rank === 1
+          ? 'bg-customGreen text-white z-20'
+          : 'bg-yellow-100 text-gray-800'
       }`}
     >
-      {/* Lottie Animation */}
-      {rank === 1 && (
+      {/* {rank === 1 && (
         <div className='absolute top-0 right-0'>
           <TopRankAnimation />
         </div>
-      )}
+      )} */}
 
       <CardContent className='flex items-center space-x-4 h-full mt-2'>
         {/* Rank Circle */}
