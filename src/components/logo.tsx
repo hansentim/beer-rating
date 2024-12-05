@@ -15,8 +15,8 @@ export default function Logo() {
       <Image
         src='/images/beer-logo.png'
         alt='SipHappns Logo'
-        width={45}
-        height={45}
+        width={35}
+        height={35}
         className='object-contain'
       />
 

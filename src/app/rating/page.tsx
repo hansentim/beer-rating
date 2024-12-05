@@ -66,26 +66,24 @@ export default function BeerRatingPage() {
   return (
     <>
       <Logo />
-      <main className='p-4'>
-        <div className='w-full max-w-sm mx-auto'>
+      <main className='flex flex-col items-center p-4 min-h-screen bg-white'>
+        <div className='w-full max-w-sm flex-grow pb-20'>
           {/* Title */}
-          <h1 className='text-4xl text-customGreen font-bold text-left mb-2 mt-10'>
+          <h1 className='text-3xl text-customGreen font-bold text-left mb-2 mt-10'>
             Beer {step + 1}
           </h1>
           {/* Description */}
-          <p className='text-left mb-6 text-custuomSubTitle'>
+          <p className='text-left mb-6 text-custuomSubTitle text-sm'>
             Take a sip, then rate the beer from 1 to 5 for its taste and
             Christmas vibe, with 5 being the absolute best in your book!
           </p>
-
           {/* Beer Card */}
           <BeerCard beer={currentBeer} />
-
           {/* Ratings Section */}
           <div className='space-y-6 mt-6'>
             {/* Taste Section */}
             <div className='flex flex-col space-y-2'>
-              <h3 className='text-lg font-bold'>Taste</h3>
+              <h3 className='text-base font-bold'>Taste</h3>
               <div className='p-2 border border-gray-200 rounded'>
                 <ToggleGroup
                   type='single'
@@ -102,10 +100,10 @@ export default function BeerRatingPage() {
                       className={`w-12 h-12 flex justify-center items-center border rounded-full font-bold transition-colors focus:outline-none
                   ${
                     tasteRating === value
-                      ? 'bg-customGreen  text-white border-customGreen ring-2 ring-customGreen'
+                      ? 'bg-customGreen text-white border-customGreen ring-2 ring-customGreen'
                       : 'bg-white text-gray-800 border-gray-300'
                   }
-                 hover:bg-customLightGreen   data-[state=on]:bg-customToggleGreen data-[state=on]:text-white data-[state=on]:ring-white`}
+                 hover:bg-customLightGreen data-[state=on]:bg-customToggleGreen data-[state=on]:text-white data-[state=on]:ring-white`}
                     >
                       {value}
                     </ToggleGroupItem>
@@ -116,7 +114,7 @@ export default function BeerRatingPage() {
 
             {/* Christmas Vibe Section */}
             <div className='flex flex-col space-y-2'>
-              <h3 className='text-lg font-bold'>Christmas Vibe</h3>
+              <h3 className='text-base font-bold'>Christmas Vibe</h3>
               <div className='p-2 border border-gray-200 rounded'>
                 <ToggleGroup
                   type='single'
@@ -133,10 +131,10 @@ export default function BeerRatingPage() {
                       className={`w-12 h-12 flex justify-center items-center border rounded-full font-bold transition-colors focus:outline-none
                   ${
                     feelRating === value
-                      ? 'bg-customGreen  text-white border-customGreen ring-2 ring-customGreen'
+                      ? 'bg-customGreen text-white border-customGreen ring-2 ring-customGreen'
                       : 'bg-white text-gray-800 border-gray-300'
                   }
-                 hover:bg-customLightGreen   data-[state=on]:bg-customToggleGreen data-[state=on]:text-white data-[state=on]:ring-white`}
+                 hover:bg-customLightGreen data-[state=on]:bg-customToggleGreen data-[state=on]:text-white data-[state=on]:ring-white`}
                     >
                       {value}
                     </ToggleGroupItem>
@@ -145,23 +143,23 @@ export default function BeerRatingPage() {
               </div>
             </div>
           </div>
+        </div>
 
-          {/* Buttons */}
-          <div className='mt-8 text-center'>
-            <Button
-              onClick={handleRatingSubmit}
-              className={`w-full h-14 font-bold ${
-                step + 1 < beers.length
-                  ? 'bg-customGreen hover:bg-customHoverGreen text-white'
-                  : 'bg-customBrown hover:bg-customBrownHover text-white '
-              }`}
-              disabled={tasteRating === null || feelRating === null}
-            >
-              {step + 1 < beers.length
-                ? 'Save rating & go to next beer'
-                : 'Submit ratings & view results'}
-            </Button>
-          </div>
+        {/* Button Section */}
+        <div className='fixed bottom-4 left-4 right-4'>
+          <Button
+            onClick={handleRatingSubmit}
+            className={`w-full h-14 font-bold ${
+              step + 1 < beers.length
+                ? 'bg-customGreen hover:bg-customHoverGreen text-white'
+                : 'bg-customBrown hover:bg-customBrownHover text-white'
+            }`}
+            disabled={tasteRating === null || feelRating === null}
+          >
+            {step + 1 < beers.length
+              ? 'Save rating & go to next beer'
+              : 'Submit ratings & view results'}
+          </Button>
         </div>
       </main>
     </>
