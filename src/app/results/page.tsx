@@ -91,7 +91,7 @@ export default function ResultsPage() {
       // Trigger animation if top rank exists
       if (sortedResults[0]?.beerId) {
         setShowAnimation(true);
-        setTimeout(() => setShowAnimation(false), 9000);
+        setTimeout(() => setShowAnimation(false), 3500);
       }
 
       setLoading(false);
@@ -118,7 +118,15 @@ export default function ResultsPage() {
   return (
     <main className='p-4 relative'>
       {/* Full-Screen Animation Overlay */}
-      {showAnimation && <TopRankAnimation />}
+      {showAnimation && (
+        <div
+          className={`absolute inset-0 z-50 flex items-center justify-center ${
+            showAnimation ? 'pointer-events-auto' : 'pointer-events-none'
+          }`}
+        >
+          <TopRankAnimation />
+        </div>
+      )}
 
       <h1 className='text-4xl text-left font-bold '>
         And, the
