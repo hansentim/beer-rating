@@ -146,7 +146,7 @@ export default function BeerRatingPage() {
         </div>
 
         {/* Button Section */}
-        <div className='fixed bottom-4 left-4 right-4'>
+        <div className='fixed bottom-0 left-0 right-0 bg-white px-8 py-2 border-t border-customBordergrey'>
           <Button
             onClick={handleRatingSubmit}
             className={`w-full h-14 font-bold ${

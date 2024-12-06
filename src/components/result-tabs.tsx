@@ -29,10 +29,10 @@ export const ResultTabs: React.FC<ResultTabsProps> = ({ results }) => {
       <TabsList className='flex justify-center mb-4 space-x-4 bg-white'>
         <TabsTrigger
           value='total'
-          className='px-6 border-black border-2  text-lg font-bold transition-colors rounded-full
+          className='px-6 border-black border  text-lg font-bold transition-colors rounded-full text-customGrey
                data-[state=active]:bg-customYellow 
                data-[state=active]:text-black 
-               data-[state=active]:border-2 
+               data-[state=active]:border 
                data-[state=active]:border-black 
                hover:bg-customYellowHover hover:text-black'
         >
@@ -40,10 +40,10 @@ export const ResultTabs: React.FC<ResultTabsProps> = ({ results }) => {
         </TabsTrigger>
         <TabsTrigger
           value='taste'
-          className='px-6 border-black border-2  text-lg font-bold transition-colors rounded-full
+          className='px-6 border-black border  text-lg font-bold transition-colors rounded-full text-customGrey
                data-[state=active]:bg-customYellow 
                data-[state=active]:text-black 
-               data-[state=active]:border-2 
+               data-[state=active]:border
                data-[state=active]:border-black 
                hover:bg-customYellowHover hover:text-black'
         >
@@ -51,10 +51,10 @@ export const ResultTabs: React.FC<ResultTabsProps> = ({ results }) => {
         </TabsTrigger>
         <TabsTrigger
           value='christmas'
-          className='px-6 border-black border-2  text-lg font-bold transition-colors rounded-full
+          className='px-6 border-black border  text-lg font-bold transition-colors rounded-full text-customGrey
           data-[state=active]:bg-customYellow 
           data-[state=active]:text-black 
-          data-[state=active]:border-2 
+          data-[state=active]:border
           data-[state=active]:border-black 
           hover:bg-customYellowHover hover:text-black'
         >

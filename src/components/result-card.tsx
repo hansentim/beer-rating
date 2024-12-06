@@ -51,11 +51,11 @@ export const ResultCard: React.FC<ResultCardProps> = ({
           </CardHeader>
           <div className='flex space-x-2 mt-1'>
             {/* Total Score Badge */}
-            <Badge className='bg-customBadgePink text-black px-3 py-1 text-sm font-bold rounded-full shadow-none'>
+            <Badge className='bg-customBadgePink text-black px-3 py-1 text-sm font-bold rounded-full shadow-none pointer-events-none'>
               {score} p
             </Badge>
             {/* User Score Badge */}
-            <Badge className='bg-customBadgeGreen2 text-black px-3 py-1 text-sm font-bold rounded-full flex items-center space-x-1 shadow-none'>
+            <Badge className='bg-customBadgeGreen2 text-black px-3 py-1 text-sm font-bold rounded-full flex items-center space-x-1 shadow-none pointer-events-none'>
               <span role='img' aria-label='detective'>
                 🕵️
               </span>

@@ -131,7 +131,7 @@ export default function ResultsPage() {
           </div>
         )}
 
-        <h1 className='text-4xl text-left font-bold mt-8'>
+        <h1 className='text-4xl text-left font-bold mt-10 mb-2'>
           And, the
           <span className='text-customGreen'> winner</span> is...
         </h1>

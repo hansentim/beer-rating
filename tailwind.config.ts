@@ -30,6 +30,8 @@ export default {
         customToggleGreen: '#226F54',
         customLightGreen: '#87C38F',
         customLightgrey: '#929292',
+        customGrey: '#484848',
+        customBordergrey: '#F5F5F5',
         card: {
           DEFAULT: 'hsl(var(--card))',
           foreground: 'hsl(var(--card-foreground))',
