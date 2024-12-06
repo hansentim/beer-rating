@@ -31,6 +31,7 @@ export default function ResultsPage() {
   >([]);
   const [loading, setLoading] = useState(true);
   const [showAnimation, setShowAnimation] = useState(false);
+  const [currentTopRank, setCurrentTopRank] = useState<number | null>(null);
   const router = useRouter();
   const { userName } = useUser();
 
@@ -86,8 +87,15 @@ export default function ResultsPage() {
     const sortedResults = processedResults.sort(
       (a, b) => b.totalScore - a.totalScore
     );
-    setResults(sortedResults);
 
+    const newTopRank = sortedResults[0]?.beerId || null;
+    if (newTopRank !== currentTopRank) {
+      setCurrentTopRank(newTopRank);
+      setShowAnimation(true);
+      setTimeout(() => setShowAnimation(false), 3500);
+    }
+
+    setResults(sortedResults);
     setLoading(false);
   };
 
@@ -110,7 +118,7 @@ export default function ResultsPage() {
     return () => {
       supabase.removeChannel(subscription);
     };
-  }, [userName]);
+  }, [userName, currentTopRank]);
 
   if (loading) {
     return (
